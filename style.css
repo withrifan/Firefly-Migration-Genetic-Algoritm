@@ -7,6 +7,12 @@ body {
   font-family: "Consolas", monospace;
 }
 
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .project-title {
   color: white;
   text-align: center;
@@ -17,24 +23,17 @@ body {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.main-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 canvas {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   border-radius: 4px 4px 0 0;
   display: block;
 }
 
-/* Dashboard Styling */
 .dashboard {
   background: #333;
   color: white;
   padding: 20px;
-  width: 800px; /* Harus sama dengan lebar canvas */
+  width: 800px;
   box-sizing: border-box;
   border-radius: 0 0 8px 8px;
   display: grid;
@@ -68,7 +67,7 @@ canvas {
 h4 {
   margin: 0 0 5px 0;
   color: #aaa;
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -79,7 +78,7 @@ h4 {
   color: #4caf50;
 }
 .sub-val {
-  font-size: 12px;
+  font-size: 13px;
   color: #888;
   margin-top: 2px;
 }
@@ -91,7 +90,7 @@ h4 {
   gap: 5px;
 }
 label {
-  font-size: 12px;
+  font-size: 13px;
   color: #ddd;
   font-weight: bold;
 }
@@ -134,13 +133,13 @@ button:hover {
 }
 
 .modal-overlay {
-  display: none; /* Tersembunyi secara default */
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.85); /* Latar belakang gelap */
+  background: rgba(0, 0, 0, 0.85);
   z-index: 1000;
   justify-content: center;
   align-items: center;
@@ -148,7 +147,7 @@ button:hover {
 
 .modal-box {
   background: #2c3e50;
-  border: 2px solid #2ecc71; /* Garis hijau kemenangan */
+  border: 2px solid #2ecc71;
   padding: 30px;
   border-radius: 10px;
   text-align: center;
