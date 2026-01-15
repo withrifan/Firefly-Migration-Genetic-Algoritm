@@ -4,6 +4,7 @@ let lifespanInput, lifespanSlider;
 let difficultySel;
 let restartBtn;
 let statGen, statCycles, statSuccess, statAvgFit, statMaxFit, statTotalSuccess;
+let modalOverlay;
 
 function setupDashboard() {
     let mainContainer = select('#main-container');
@@ -65,6 +66,54 @@ function setupDashboard() {
     // 4. Tombol Restart
     restartBtn = createButton('APPLY & RESTART').parent(controlBox);
     restartBtn.mousePressed(startSimulation);
+
+    setupModal();
+}
+
+// --- FUNGSI BARU: Membuat Elemen HTML Popup ---
+function setupModal() {
+    // 1. Buat Overlay (Layar Gelap)
+    modalOverlay = createDiv('').class('modal-overlay').parent(document.body);
+
+    // 2. Buat Kotak di tengah
+    let box = createDiv('').class('modal-box').parent(modalOverlay);
+
+    // 3. Judul
+    createElement('h2', 'MISSION ACCOMPLISHED').parent(box);
+    createDiv('Populasi berhasil mencapai target 100%').style('color', '#aaa').style('margin-bottom', '20px').parent(box);
+
+    // 4. Statistik (Container)
+    let statsContainer = createDiv('').id('modal-stats').parent(box);
+
+    // 5. Tombol Restart
+    let btn = createButton('MAIN LAGI').class('modal-btn').parent(box);
+    btn.mousePressed(() => {
+        modalOverlay.style('display', 'none'); // Sembunyikan popup
+        startSimulation(); // Reset simulasi
+        loop(); // Jalankan loop lagi (karena kita pause saat menang)
+    });
+}
+
+// --- FUNGSI BARU: Menampilkan Popup & Isi Data ---
+function showVictory() {
+    // Isi data statistik terakhir
+    let container = select('#modal-stats');
+    container.html(''); // Bersihkan isi lama
+
+    // Helper untuk buat baris data
+    const addRow = (label, value) => {
+        let row = createDiv('').class('stat-row').parent(container);
+        createSpan(label).style('color', '#ddd').parent(row);
+        createSpan(value).style('font-weight', 'bold').parent(row);
+    };
+
+    addRow('Generasi Diperlukan', generationCount);
+    addRow('Populasi', popSizeInput.value());
+    addRow('Max Fitness', population.stats.maxFit.toFixed(4));
+    addRow('Rata-rata Fitness', population.stats.avgFit.toFixed(4));
+
+    // Tampilkan Modal
+    modalOverlay.style('display', 'flex');
 }
 
 function updateStatsUI() {

@@ -39,6 +39,20 @@ function draw() {
 
     if (lifeCounter >= lifespan) { // Gunakan >= untuk keamanan jika lifespan diubah on-fly
         population.evaluate();
+
+        // --- UPDATE LOGIKA FINISH ---
+        // Cek apakah success rate mencapai 100%
+        // Kita gunakan >= 99.9 untuk antisipasi pembulatan floating point
+        if (population.stats.successRate >= 99.9) {
+            updateStatsUI(); // Update UI terakhir kali sebelum freeze
+            console.log("Victory!");
+
+            showVictory(); // <--- Panggil Popup yang kita buat tadi
+
+            noLoop(); // Hentikan game (Freeze)
+            return;   // Keluar agar tidak lanjut ke selection
+        }
+
         population.selection();
         lifeCounter = 0;
         generationCount++;
