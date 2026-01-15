@@ -7,6 +7,16 @@ body {
   font-family: "Consolas", monospace;
 }
 
+.project-title {
+  color: white;
+  text-align: center;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 24px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
 .main-container {
   display: flex;
   flex-direction: column;
@@ -87,10 +97,10 @@ label {
 }
 
 input[type="number"] {
-  padding: 5px;
+  padding: 6px;
   border-radius: 4px;
   border: none;
-  width: 60px;
+  width: 80px;
   text-align: center;
   font-weight: bold;
 }
@@ -100,7 +110,7 @@ input[type="range"] {
 }
 
 select {
-  padding: 8px;
+  padding: 7px;
   border-radius: 4px;
   border: none;
   font-weight: bold;
@@ -116,7 +126,7 @@ button {
   border-radius: 4px;
   font-weight: bold;
   letter-spacing: 1px;
-  flex-grow: 1;
+  width: 150px;
   transition: background 0.2s;
 }
 button:hover {

@@ -64,27 +64,30 @@ function startSimulation() {
     let popVal = parseInt(popSizeInput.value()) || 100;
     if (popVal < 10) popVal = 10;
 
-    // 2. Ambil Nilai Lifespan (BARU)
+    // 2. Ambil Nilai Lifespan
     let lifeVal = parseInt(lifespanInput.value()) || 400;
-    if (lifeVal < 100) lifeVal = 100; // Batas minimal agar tidak error
+    if (lifeVal < 100) lifeVal = 100;
 
-    // Sinkronisasi UI
+    // 3. Ambil Nilai Mutation Rate
+    let mutVal = parseFloat(mutationInput.value());
+    if (isNaN(mutVal)) mutVal = 0.01;
+    mutationRate = mutVal;
+
+    // Sinkronisasi Input (Opsional, agar format rapi kembali ke input)
     popSizeInput.value(popVal);
-    popSizeSlider.value(popVal);
     lifespanInput.value(lifeVal);
-    lifespanSlider.value(lifeVal);
+    mutationInput.value(mutationRate);
 
     // Update Variabel Global
     lifespan = lifeVal;
-
-    // Reset Logika
     lifeCounter = 0;
     generationCount = 1;
     totalCompletedFireflys = 0;
 
-    population = new Population(0.01, popVal);
+    // Buat Populasi Baru
+    population = new Population(mutationRate, popVal);
 
-    // 3. Setup Rintangan
+    // 4. Setup Rintangan
     obstacles = [];
     let mode = difficultySel.value();
 
@@ -96,18 +99,16 @@ function startSimulation() {
         obstacles.push(new Obstacle(0, 350, 300, 20));
         obstacles.push(new Obstacle(width - 300, 350, 300, 20));
     }
-    else if (mode === 'random') { // <--- LOGIKA RANDOM BLOCKS
-        let count = 12; // Jumlah blok
+    else if (mode === 'random') {
+        let count = 12;
         for (let i = 0; i < count; i++) {
-            // Random posisi X dan Y
             let rx = random(width);
-            let ry = random(150, height - 150); // Jaga jarak aman dari target (atas) dan start (bawah)
-
-            // Random ukuran
+            let ry = random(150, height - 150);
             let rw = random(50, 120);
             let rh = random(20, 40);
-
             obstacles.push(new Obstacle(rx, ry, rw, rh));
         }
     }
+
+    loop();
 }
