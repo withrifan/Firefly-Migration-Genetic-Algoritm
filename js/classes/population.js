@@ -5,7 +5,7 @@ class Population {
         this.mutationRate = m;
         this.popSize = num;
         this.fireflys = [];     // Wadah untuk menyimpan semua objek kunang-kunang
-        this.matingPool = [];   // "Kolam Jodoh" untuk undian orang tua
+        this.matingPool = [];   // Wadah untuk undian parent
         this.stats = { successRate: 0, avgFit: 0, maxFit: 0 }; // Data statistik untuk dashboard
         this.bestFireflyIndex = 0; // Menyimpan nomor urut kunang-kunang terbaik
 
@@ -15,7 +15,7 @@ class Population {
         }
     }
 
-    // Fungsi Evaluate: "Rapor Akhir Semester"
+    // Fungsi Evaluate
     // Dijalankan setiap kali satu generasi selesai (lifespan habis)
     evaluate() {
         let maxFit = 0;
@@ -23,12 +23,12 @@ class Population {
         let successCount = 0;
         this.bestFireflyIndex = 0; // Reset juara
 
-        // 1. Hitung Nilai (Fitness) Setiap Kunang-kunang
+        // Hitung Nilai (Fitness) Setiap Kunang-kunang
         for (let i = 0; i < this.popSize; i++) {
             this.fireflys[i].calcFitness(); // Perintahkan kunang-kunang hitung skornya sendiri
             totalFit += this.fireflys[i].fitness;
 
-            // Cari siapa yang nilainya paling tinggi (Juara Kelas)
+            // Cari siapa yang nilainya paling tinggi
             if (this.fireflys[i].fitness > maxFit) {
                 maxFit = this.fireflys[i].fitness;
                 this.bestFireflyIndex = i; // Tandai nomor urutnya
@@ -38,15 +38,15 @@ class Population {
             if (this.fireflys[i].completed) successCount++;
         }
 
-        // 2. Update Data Statistik (Untuk ditampilkan di UI)
+        // Update Data Statistik (Untuk ditampilkan di UI)
         this.stats.successRate = (successCount / this.popSize) * 100;
         this.stats.avgFit = totalFit / this.popSize;
         this.stats.maxFit = maxFit;
 
-        // Tambahkan ke total global (opsional, untuk rekor dunia)
+        // Tambahkan ke total global
         totalCompletedFireflys += successCount;
 
-        // 3. Membuat "Mating Pool" (Kolam Jodoh / Undian)
+        // Membuat "Mating Pool"
         // Konsepnya: Semakin tinggi fitness, semakin banyak tiket undian yang didapat.
         this.matingPool = [];
         for (let i = 0; i < this.popSize; i++) {
@@ -63,40 +63,40 @@ class Population {
         }
     }
 
-    // Fungsi Selection: "Reproduksi / Regenerasi"
+    // Fungsi Selection: Regenerasi
     // Menciptakan populasi baru berdasarkan orang tua dari Mating Pool
     selection() {
         let newFireflys = [];
 
-        // --- FITUR ELITISME (JALUR PRESTASI) ---
+        // FITUR ELITISME
         // Agar gen terbaik tidak hilang karena mutasi/kesialan,
         // kita langsung loloskan sang juara ke generasi berikutnya tanpa diubah.
 
-        // 1. Ambil DNA juara
+        // Ambil DNA juara
         let bestDNA = this.fireflys[this.bestFireflyIndex].dna;
 
-        // 2. Copy DNA-nya (wajib pakai copy/slice agar tidak tembus referensinya)
+        // Copy DNA-nya
         let championDNA = new DNA(bestDNA.genes.slice());
 
-        // 3. Masukkan ke slot pertama (Absen No. 0)
+        // Masukkan ke slot pertama 
         newFireflys[0] = new Firefly(championDNA);
         newFireflys[0].isChampion = true; // Tandai agar warnanya bisa dibedakan
 
-        // --- REPRODUKSI BIASA UNTUK SISA POPULASI ---
+        // REPRODUKSI BIASA UNTUK SISA POPULASI
         // Mulai dari index 1 karena index 0 sudah diisi sang juara
         for (let i = 1; i < this.fireflys.length; i++) {
-            // A. Pilih dua orang tua secara acak dari kolam undian
-            // (Ingat: yang nilainya bagus punya tiket lebih banyak di kolam ini)
+            // Pilih dua orang tua secara acak dari kolam undian
+            // yang nilainya bagus punya tiket lebih banyak di kolam ini
             let parentA = random(this.matingPool).dna;
             let parentB = random(this.matingPool).dna;
 
-            // B. Kawinkan DNA mereka (Crossover)
+            // Kawinkan DNA mereka (Crossover)
             let childDNA = parentA.crossover(parentB);
 
-            // C. Berikan kemungkinan Mutasi (Perubahan acak)
+            // Berikan kemungkinan Mutasi (Perubahan acak)
             childDNA.mutation(this.mutationRate);
 
-            // D. Lahirkan anak baru dengan DNA tersebut
+            // Lahirkan anak baru dengan DNA tersebut
             newFireflys[i] = new Firefly(childDNA);
         }
 
