@@ -5,6 +5,7 @@ let difficultySel;      // Dropdown untuk memilih tingkat kesulitan
 let restartBtn;         // Tombol merah "Apply & Restart"
 let statGen, statCycles, statSuccess, statAvgFit, statMaxFit, statTotalSuccess; // Elemen teks statistik
 let modalOverlay;       // Layar hitam transparan untuk popup kemenangan
+let speedSlider, speedLabel; // Fitur slider kecepatan
 
 // FUNGSI UTAMA: MEMBANGUN DASHBOARD 
 // Dipanggil satu kali saat 'setup()' di sketch.js berjalan
@@ -56,6 +57,22 @@ function setupDashboard() {
     mutationInput.attribute('step', '0.01'); // Agar bisa naik/turun desimal (0.01, 0.02, dst)
     mutationInput.attribute('min', '0');
     mutationInput.attribute('max', '1');
+
+    // Input Speed
+    // Buat grup input seperti yang lain
+    let groupSpeed = createDiv('<label>Speed</label>').class('input-group').parent(controlBox);
+
+    // Buat Dropdown
+    speedSel = createSelect().parent(groupSpeed);
+
+    // Tambahkan Opsi (Label, Nilai)
+    speedSel.option('1x', 1);   // Label "1x", Nilainya 1
+    speedSel.option('2x', 2);   // Label "2x", Nilainya 2
+    speedSel.option('5x', 5);   // Label "5x", Nilainya 5
+    speedSel.option('10x', 10); // Label "10x", Nilainya 10
+
+    // Set default ke 1x
+    speedSel.selected(1);
 
     // Dropdown Kesulitan (Pilihan Level)
     let groupDiff = createDiv('<label>Jenis Rintangan</label>').class('input-group').parent(controlBox);

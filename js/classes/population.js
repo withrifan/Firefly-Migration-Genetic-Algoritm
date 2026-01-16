@@ -104,11 +104,19 @@ class Population {
         this.fireflys = newFireflys;
     }
 
-    // Fungsi Run: Menjalankan aktivitas sehari-hari populasi
-    run() {
+    // UPDATE: Hanya menghitung fisika (bisa di-loop berkali-kali)
+    update() {
         for (let i = 0; i < this.popSize; i++) {
-            this.fireflys[i].update(); // Bergerak
-            this.fireflys[i].show();   // Tampil di layar
+            this.fireflys[i].update();
         }
     }
+
+    // SHOW: Hanya menggambar (dipanggil sekali per frame)
+    show() {
+        for (let i = 0; i < this.popSize; i++) {
+            this.fireflys[i].show();
+        }
+    }
+
+
 }

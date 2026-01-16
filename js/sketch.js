@@ -26,50 +26,50 @@ function setup() {
 
 // FUNGSI DRAW
 function draw() {
-    // Gambar Background Malam 
+    // Gambar Background (Sekali per frame)
     background(10, 10, 30);
 
-    // Gambar Target 
     noStroke();
-    fill(255, 255, 255, 20); ellipse(target.x, target.y, 60, 60); // luar
-    fill(255, 255, 255, 50); ellipse(target.x, target.y, 45, 45); // Tengah
-    fill(255, 255, 240); ellipse(target.x, target.y, 30, 30);     // Inti lampu
-
-    // Gambar Semua Obstacles (Tembok)
+    fill(255, 255, 255, 20); ellipse(target.x, target.y, 60, 60);
+    fill(255, 255, 255, 50); ellipse(target.x, target.y, 45, 45);
+    fill(255, 255, 240); ellipse(target.x, target.y, 30, 30);
     fill(80, 80, 90);
     for (let obs of obstacles) obs.show();
 
-    // Update & Gambar Populasi (Gerakkan kunang-kunang)
-    population.run();
+    // LOGIKA SPEED (DROPDOWN) ---
+    let cycles = 1; // Default speed normal
 
-    // Update Waktu & UI
-    lifeCounter++; // Waktu berjalan maju
-    updateStatsUI(); // Perbarui angka di dashboard
-
-    // PERGANTIAN GENERASI
-    // Cek apakah durasi hidup generasi ini sudah habis?
-    if (lifeCounter >= lifespan) {
-
-        // Beri nilai untuk semua kunang-kunang
-        population.evaluate();
-
-        // Jika 99.9% populasi berhasil sampai, kita anggap menang
-        if (population.stats.successRate >= 99.9) {
-            updateStatsUI();
-            console.log("Victory!");
-            showVictory(); // Tampilkan Popup Berhasil
-            noLoop();      // Hentikan animasi (Freeze)
-            return;        // Keluar fungsi, jangan lanjut evolusi
-        }
-
-        // SELEKSI & REPRODUKSI (Evolusi)
-        // Membuat anak baru dari orang tua terbaik
-        population.selection();
-
-        // RESET WAKTU
-        lifeCounter = 0;      // Reset jam ke 0
-        generationCount++;    // Generasi bertambah
+    // Cek apakah dropdown speedSel sudah dibuat?
+    if (typeof speedSel !== 'undefined') {
+        // Ambil nilainya dan ubah jadi angka (Integer)
+        cycles = parseInt(speedSel.value());
     }
+
+    // Loop logika sebanyak 'cycles' kali (1x, 2x, 5x, atau 10x)
+    for (let n = 0; n < cycles; n++) {
+
+        population.update();
+        lifeCounter++;
+
+        if (lifeCounter >= lifespan) {
+            population.evaluate();
+
+            if (population.stats.successRate >= 99.9) {
+                console.log("Victory!");
+                showVictory();
+                noLoop();
+                return;
+            }
+
+            population.selection();
+            lifeCounter = 0;
+            generationCount++;
+        }
+    }
+
+    // VISUALISASI 
+    population.show();
+    updateStatsUI();
 }
 
 // FUNGSI START/RESTART SIMULASI
