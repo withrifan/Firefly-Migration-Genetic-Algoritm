@@ -53,8 +53,8 @@ function setupDashboard() {
 
     // Input Mutation Rate (Tingkat Mutasi)
     let groupMut = createDiv('<label>Mutation Rate</label>').class('input-group').parent(controlBox);
-    mutationInput = createInput('0.01', 'number').parent(groupMut); // Default 0.01 (1%)
-    mutationInput.attribute('step', '0.01'); // Agar bisa naik/turun desimal (0.01, 0.02, dst)
+    mutationInput = createInput('0.0001', 'number').parent(groupMut); // Default 0.0001
+    mutationInput.attribute('step', '0.0001');
     mutationInput.attribute('min', '0');
     mutationInput.attribute('max', '1');
 
