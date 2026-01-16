@@ -147,7 +147,7 @@ function setupIntroModal() {
 
             <h3>Fitur & Kontrol:</h3>
             <ul>
-                <li>Gunakan <b>Speed Slider</b> untuk mempercepat proses belajar.</li>
+                <li>Gunakan <b>Speed Dropdown</b> untuk mempercepat proses belajar.</li>
                 <li>Gunakan <b>Dropdown Rintangan</b> untuk mengubah tingkat kesulitan.</li>
                 <li>Lihat statistik real-time pada Dashboard di bawah.</li>
             </ul>
