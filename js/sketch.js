@@ -88,7 +88,7 @@ function startSimulation() {
 
     // Ambil Nilai Mutation Rate
     let mutVal = parseFloat(mutationInput.value());
-    if (isNaN(mutVal)) mutVal = 0.01; // Default 1%
+    if (isNaN(mutVal)) mutVal = 0.0001;
     mutationRate = mutVal; // Simpan ke variabel global agar dibaca Population
 
     // Tulis ulang nilai yang sudah divalidasi ke input box (agar rapi)
