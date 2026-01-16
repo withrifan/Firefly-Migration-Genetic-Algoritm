@@ -22,6 +22,9 @@ function setup() {
 
     // Memulai simulasi pertama kali
     startSimulation();
+
+    setupIntroModal(); // Tampilkan Popup Intro
+    noLoop();          // PAUSE simulasi agar tidak jalan sebelum tombol "Mulai" ditekan
 }
 
 // FUNGSI DRAW

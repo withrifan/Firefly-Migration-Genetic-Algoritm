@@ -188,3 +188,32 @@ button:hover {
 .modal-btn:hover {
   background: #27ae60;
 }
+
+.intro-box {
+  width: 700px;
+  text-align: left;
+  max-width: 90%;
+}
+
+.intro-content {
+  color: #ddd;
+  line-height: 1.6;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.intro-content h3 {
+  color: #2ecc71;
+  border-bottom: 1px solid #444;
+  padding-bottom: 5px;
+  margin-top: 15px;
+}
+
+.intro-content ul {
+  list-style-type: square;
+  padding-left: 20px;
+}
+
+.intro-content li {
+  margin-bottom: 5px;
+}

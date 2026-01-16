@@ -116,6 +116,55 @@ function setupModal() {
     });
 }
 
+// FUNGSI POPUP INTRO
+// Dipanggil sekali saat halaman dibuka
+function setupIntroModal() {
+    // Buat layar gelap background
+    let introOverlay = createDiv('').class('modal-overlay').style('display', 'flex').parent(document.body);
+
+    // Buat Kotak Konten 
+    let box = createDiv('').class('modal-box intro-box').parent(introOverlay);
+
+    // Judul Project
+    createElement('h2', 'Firefly Migration').parent(box);
+    createDiv('Simulasi Evolusi dengan Algoritma Genetika').style('color', '#aaa').style('font-style', 'italic').style('margin-bottom', '15px').parent(box);
+
+    // Konten Deskripsi
+    let contentHTML = `
+        <div class="intro-content">
+            <p>
+                Selamat datang! Program ini mensimulasikan bagaimana sekelompok kunang-kunang "belajar" 
+                untuk bermigrasi melewati rintangan menuju target (Bulan) menggunakan prinsip evolusi biologi.
+            </p>
+            
+            <h3>Cara Kerja:</h3>
+            <ul>
+                <li><b>Generasi Awal:</b> Kunang-kunang bergerak acak tanpa arah.</li>
+                <li><b>Seleksi Alam:</b> Kunang-kunang yang paling dekat dengan target dianggap "unggul".</li>
+                <li><b>Reproduksi:</b> Kunang-kunang unggul akan mewariskan DNA (pola gerakan) ke anaknya.</li>
+                <li><b>Mutasi:</b> Terjadi perubahan acak kecil agar menemukan jalur baru yang lebih baik.</li>
+            </ul>
+
+            <h3>Fitur & Kontrol:</h3>
+            <ul>
+                <li>Gunakan <b>Speed Slider</b> untuk mempercepat proses belajar.</li>
+                <li>Gunakan <b>Dropdown Rintangan</b> untuk mengubah tingkat kesulitan.</li>
+                <li>Lihat statistik real-time pada Dashboard di bawah.</li>
+            </ul>
+        </div>
+    `;
+    createDiv(contentHTML).parent(box);
+
+    // Tombol MULAI
+    let btn = createButton('MULAI SIMULASI').class('modal-btn').parent(box);
+
+    // Ketika tombol ditekan:
+    btn.mousePressed(() => {
+        introOverlay.style('display', 'none'); // Hilangkan popup
+        loop(); // JALANKAN simulasi (p5.js loop)
+    });
+}
+
 // FUNGSI UNTUK MENAMPILKAN POPUP
 // Dipanggil oleh sketch.js saat successRate >= 99.9%
 function showVictory() {
